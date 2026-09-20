@@ -13,6 +13,12 @@
 ![Vue](https://img.shields.io/badge/Web-Vue3-4FC08D?logo=vuedotjs)
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20%7C%20Web-lightgrey)
 
+[![GitHub stars](https://img.shields.io/github/stars/xufp/airecord?style=social)](https://github.com/xufp/airecord/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/xufp/airecord?style=social)](https://github.com/xufp/airecord/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/xufp/airecord)](https://github.com/xufp/airecord/issues)
+[![Last commit](https://img.shields.io/github/last-commit/xufp/airecord)](https://github.com/xufp/airecord/commits/main)
+[![Repo size](https://img.shields.io/github/repo-size/xufp/airecord)](https://github.com/xufp/airecord)
+
 [简体中文](#-项目简介) · [English](#-english) · [快速开始](#-快速开始) · [架构](#-系统架构) · [路线图](#-路线图-roadmap) · [贡献](./CONTRIBUTING.md)
 
 </div>
@@ -38,7 +44,7 @@ AiRecord 都能给你一个**开箱即用的起点**。
 ## ✨ 核心特性
 
 ### 📱 移动端 App（Flutter）
-- **蓝牙录音笔接入**：基于 BLE 与录音笔硬件通信（自定义通信协议，见 `docs/`），支持设备连接、电量、文件同步。
+- **蓝牙录音笔接入**：基于 BLE 与录音笔硬件通信，支持设备连接、电量、文件同步。
 - **本地录音 & 音频处理**：Opus 编解码、实时波形可视化、音频会话管理。
 - **云端语音转写（ASR）**：录音上传对象存储后触发云端转写，展示带时间轴的文字稿。
 - **AI 智能总结**：接入大模型对转写结果做摘要、要点提取、对话问答。
@@ -115,7 +121,6 @@ flowchart LR
 | 📱 移动端 App | [`airecordapp/`](./airecordapp) | Flutter / Dart | iOS & Android 录音笔配套 App |
 | ⚙️ 后端服务 | [`airecodeserver/`](./airecodeserver) | Go · tRPC-Go · GORM · Vue(admin) | API / WebSocket / Admin / 定时任务 |
 | 🛒 购买 Web 端 | [`airecodeshop/`](./airecodeshop) | Vue 3 · Vite · Element Plus | 套餐购买与支付 |
-| 📄 文档 | [`docs/`](./docs) | Markdown | BLE 通信协议、设计文档等 |
 
 ---
 
@@ -176,7 +181,6 @@ npm run build                   # 产物在 dist/
 - [ ] 补充英文版完整文档与 API 参考
 - [ ] 提供 `docker-compose` 一键启动后端 + MySQL
 - [ ] 抽象 ASR / LLM / 支付为标准接口，方便接入更多厂商（讯飞、阿里、DeepSeek、Stripe…）
-- [ ] 提供设备端固件示例与完整 BLE 协议开放规范
 - [ ] Web 管理后台功能增强与权限体系
 - [ ] 单元测试与 CI（GitHub Actions）覆盖
 
