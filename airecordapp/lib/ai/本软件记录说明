@@ -1,0 +1,89 @@
+1.android 构建APK时出错：算法HmacPBESHA256不可用
+可手动生成
+keytool -genkey -v -keystore debug.keystore -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -storetype JKS
+2.打包操作
+配置打包参数android/app/build.gradle
+    signingConfigs {
+        release {
+            storeFile file('../debug.keystore')
+            storePassword = 'YOUR_KEYSTORE_PASSWORD' // 对应生成keystore输入的密码
+            keyAlias = 'your_alias' // 对应生成key别名文件
+            keyPassword = 'YOUR_KEY_PASSWORD' // 生成文件时候对应输入的密码
+        }
+    }
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.release
+        }
+    }
+android studio操作
+build -> flutter -> build APK
+生成apk文件路径为：build/app/outputs/apk/xxx-release.apk，可以直接安装
+2.环境
+本服务用到包为flutter3.24.3 + jdk11/jdk8
+3.主要使用插件
+audioplayers：音频播放器
+flutter_sound：录音
+flutter_blue_plus：蓝牙
+permission_handler：蓝牙或者录音设备授权
+sqflite：数据库
+sqlite orm：floor
+floor使用命令：
+a.监听更改 -> flutter pub run build_runner watch
+b.创建 -> flutter packages pub run build_runner build
+shared_preferences：缓存
+dio：网路传输以及文件上传
+get：组件间状态管理
+C语言接入：
+a.添加C语言插件flutter create --platforms=android,ios --template=plugin native_add/opus_main
+b.安装ninja
+  b.1.安装python
+  b.2安装Visual Studio https://blog.csdn.net/qq_44859843/article/details/135024973
+c.选择cmake版本
+  路径：file -> settings -> android sdk -> sdk tools -> cmake 3.30.3
+d.编译后android/.cxx
+e.编译后文件xx.so位于build/app/intermediates/cxx/Debug/obj
+
+软件目录结构：
+层级结构
+service：基础调用服务封装，基于DB层的数据库表二次封装基础操作、具体调用下游接口层二次封住、基于webSocket封装基础操作、基于蓝牙命令行基础操作等
+logic：逻辑层，调用service层对逻辑进行封装
+controller：调用logic层，页面交互操作
+page：调用controller层进行页面基础操作
+其他目录
+config：基础配置，比如路由配置、蓝牙文件配置
+client：基于dio封装的基础操作
+command：蓝牙基础命令封装
+constant：常量定义，包括音频比特率、错误码常量
+db：本地数据库基础操作、本地缓存基础操作
+enum：属性枚举定义，建议使用充血模型，枚举相关处理函数也放在此处
+request：网络请求入参定义、迁移到service层
+response：网络响应定义、迁移到service层
+handler：作为service扩展定义、尽量少用，service层有些不够完全聚合通用的方法，可以抽出到handler，此层迁移到service层
+util：公用方法定义层
+
+基本公约
+方法定义使用驼峰
+通用方法使用static
+通用常量使用static const大写，下划线分割
+通用基础配置static const大写，下划线分割
+能使用类封装的方法尽量使用类封装，避免单独定义无归属类的函数用法
+page多页面组件使用widget目录单独定义，其他按照页面归属创建目录包含
+本页面变量数据变更，尽量使用setState进行状态管理，但是交互定义尽量在controller中完成，setState中只是进行简单的变量刷新
+跨页面刷新使用继承controller继承GetxController，非必要不继承
+
+日志说明
+调试日志使用logger.d 调试完成记得删除
+异常和错误日志使用logger.e
+普通日志使用logger.i 尽量少使用，除非需要收集一些app操作相关信息
+
+bash
+flutter clean
+rm -rf ios/Pods ios/Podfile.lock
+pod cache clean --all
+cd ios
+pod deintegrate
+pod repo update
+pod install --verbose

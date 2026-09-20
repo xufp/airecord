@@ -1,0 +1,12 @@
+/* 繁體中文 - Info.plist 本地化 */
+
+/* 應用名稱 */
+"CFBundleDisplayName" = "YiGuo Voice";
+"CFBundleName" = "YiGuo Voice";
+
+/* 權限使用說明 */
+"NSAppleMusicUsageDescription" = "UniAI需要存取您的媒體資料庫以選擇和匯入音訊檔案進行AI轉錄和分析";
+"NSBluetoothAlwaysUsageDescription" = "UniAI需要藍牙權限以連接智慧錄音裝置（如藍牙耳機、錄音筆）並即時傳輸音訊資料進行AI處理";
+"NSBluetoothPeripheralUsageDescription" = "UniAI需要藍牙權限以連接智慧錄音裝置（如藍牙耳機、錄音筆）並即時傳輸音訊資料進行AI處理";
+"NSDocumentsFolderUsageDescription" = "UniAI需要存取您的文件資料夾以儲存錄音檔案和匯出轉錄結果";
+"NSMicrophoneUsageDescription" = "UniAI需要使用麥克風進行錄音";

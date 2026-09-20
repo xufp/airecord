@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+subprojects { sub ->
+    if (sub.name != "app") {
+        sub.afterEvaluate {
+            if (it.hasProperty('android')) {
+                it.android {
+                    ndkVersion "27.0.12077973"
+                }
+            }
+        }
+    }
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+
+//ext {
+//    ffmpegKitFlutterPackage  = "audio"
+//}

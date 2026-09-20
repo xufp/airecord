@@ -1,0 +1,79 @@
+# ==========================================================================
+# AiRecord Open Source - Root .gitignore
+# ==========================================================================
+
+# ----- OS / Editor -----
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+Thumbs.db
+
+# ----- Secrets & Local Config (NEVER COMMIT) -----
+# 真实配置由使用者从 *.example 文件复制生成，禁止提交
+airecodeserver/conf/ai_record_server.yaml
+airecodeserver/conf/trpc_go.yaml
+airecodeserver/conf/ssl/*.key
+airecodeserver/conf/ssl/*.crt
+airecodeserver/conf/ssl/*.csr
+airecodeserver/conf/ssl/*.pem
+**/.env
+**/.env.local
+**/.env.*.local
+**/*.key
+**/*.jks
+**/*.keystore
+**/key.properties
+**/local.properties
+**/google-services.json
+**/GoogleService-Info.plist
+
+# ----- Go (server) -----
+airecodeserver/bin/
+airecodeserver/logs/
+*.exe
+*.test
+*.out
+
+# ----- Flutter / Dart (app) -----
+airecordapp/build/
+airecordapp/.dart_tool/
+airecordapp/.flutter-plugins
+airecordapp/.flutter-plugins-dependencies
+airecordapp/.packages
+airecordapp/.pub-cache/
+airecordapp/.pub/
+airecordapp/coverage/
+
+# ----- iOS -----
+airecordapp/ios/Pods/
+airecordapp/ios/.symlinks/
+airecordapp/ios/Flutter/Flutter.framework/
+airecordapp/ios/Flutter/App.framework/
+airecordapp/ios/Flutter/ephemeral/
+airecordapp/ios/**/*.mode1v3
+airecordapp/ios/**/*.pbxuser
+airecordapp/ios/**/xcuserdata/
+
+# ----- Android -----
+airecordapp/android/.gradle/
+airecordapp/android/app/debug/
+airecordapp/android/app/profile/
+airecordapp/android/app/release/
+airecordapp/android/.cxx/
+
+# ----- Node / Vue (shop & admin web) -----
+**/node_modules/
+airecodeshop/dist/
+airecodeserver/web/dist/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ----- Build artifacts (C/opus intermediates) -----
+*.o
+*.d
+*.pcm
+*.dia
+*.scan

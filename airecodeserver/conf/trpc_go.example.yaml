@@ -1,0 +1,41 @@
+global:
+
+server:
+  conf_path: ../conf/ai_record_server.yaml
+  filter:
+    - recovery
+  service:                          # 业务服务提供的 logic
+    - name: http.ai_record_server.api   # logic 的路由名称
+      ip: 0.0.0.0                   # 服务监听 ip 地址
+      port: 8081                    # 服务监听端口
+      protocol: http                # 应用层协议 trpc http
+      tls_cert: "../conf/ssl/server.crt"  # 添加证书路径
+      tls_key: "../conf/ssl/server.key"   # 添加私钥路径
+#      ca_cert: "../conf/ssl/ca.pem"       # CA 证书, 需要双向认证时可填写
+    - name: http.ai_record_server.admin   # logic 的路由名称
+      ip: 0.0.0.0                   # 服务监听 ip 地址
+      port: 8082                    # 服务监听端口
+      protocol: http                # 应用层协议 trpc http
+
+client:
+  service:
+    - name: ai_record_db_master     # mysql数据库连接
+      target: dsn://YOUR_DB_USER:YOUR_DB_PASSWORD@tcp(127.0.0.1:3306)/ai_record_db?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai
+    - name: api.weixin.qq.com
+      target: ip://api.weixin.qq.com
+
+plugins:
+  log:
+    default:
+      - writer: console
+        level: debug
+      - writer: file
+        level: debug
+        writer_config:
+          filename: ../logs/ai_record_server.log
+          writer_mode: 1
+          max_size: 100
+          max_backups: 10
+          max_age: 7
+          compress: false
+          time_unit: day

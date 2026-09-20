@@ -1,0 +1,92 @@
+# Uncomment this line to define a global platform for your project
+platform :ios, '13.0'
+
+# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+project 'Runner', {
+  'Debug' => :debug,
+  'Profile' => :release,
+  'Release' => :release,
+}
+
+def flutter_root
+  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+  unless File.exist?(generated_xcode_build_settings_path)
+    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
+  end
+
+  File.foreach(generated_xcode_build_settings_path) do |line|
+    matches = line.match(/FLUTTER_ROOT\=(.*)/)
+    return matches[1].strip if matches
+  end
+  raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
+end
+
+require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+
+flutter_ios_podfile_setup
+
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
+end
+
+post_install do |installer|
+  # 修复 Xcode 26 下 QCloudCore 中 @import 与关闭模块冲突的问题
+  # 把唯一一处 @import Foundation; 改成等价的 #import 写法，
+  # 这样关闭 CLANG_ENABLE_MODULES 后仍可编译。
+  qcloud_simple_ping_h = File.expand_path('Pods/QCloudCore/QCloudCore/Classes/Base/QCLOUDRestNet/DNSCache/QCloudSimplePing.h', __dir__)
+  if File.exist?(qcloud_simple_ping_h)
+    content = File.read(qcloud_simple_ping_h)
+    fixed = content.gsub(/^@import\s+Foundation\s*;/, '#import <Foundation/Foundation.h>')
+    if fixed != content
+      File.chmod(0644, qcloud_simple_ping_h) rescue nil
+      File.write(qcloud_simple_ping_h, fixed)
+      puts "[post_install] Patched QCloudSimplePing.h: @import Foundation -> #import <Foundation/Foundation.h>"
+    end
+  end
+
+  installer.pods_project.targets.each do |target|
+      flutter_additional_ios_build_settings(target)
+      target.build_configurations.each do |config|
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+          # 添加这行来禁用dSYM生成警告
+          config.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf'
+          # 排除 arm64 模拟器架构（opus.xcframework 只有 x86_64 模拟器库）
+          config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+          # 禁用 Xcode 16 显式模块预编译，避免模块缓存竞态条件 bug
+          config.build_settings['SWIFT_ENABLE_EXPLICIT_MODULES'] = 'NO'
+          # 修复 Xcode 26 下 QCloud 系列引入 <netinet6/in6.h> 等系统私有头报错
+          # 允许模块化 framework 引入非模块化的系统头（宽松设置，对其他 pod 无副作用）
+          config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+    end
+
+    # QCloudTrack/QCloudCore 引入了 <netinet6/in6.h> 等系统私有头，Xcode 26
+    # 的严格模块检查会报 'Use of private header from outside its module'。
+    # 关闭这两个 pod 的 Clang 模块即可绕过（QCloudCore 内 @import 已上面 patch 改为 #import）。
+    if target.name == 'QCloudTrack' || target.name == 'QCloudCore'
+      target.build_configurations.each do |config|
+        config.build_settings['CLANG_ENABLE_MODULES'] = 'NO'
+      end
+    end
+
+    # 解决 opus.framework 冲突
+    if target.name == 'opus_flutter'
+       target.build_phases.each do |build_phase|
+           if build_phase.respond_to?(:files)
+               build_phase.files.each do |file|
+                   if file.to_s.include?('opus.framework')
+                       build_phase.remove_file_reference(file)
+                   end
+               end
+           end
+       end
+    end
+  end
+end

@@ -1,0 +1,12 @@
+/* 한국어 - Info.plist 현지화 */
+
+/* 앱 이름 */
+"CFBundleDisplayName" = "YiGuo Voice";
+"CFBundleName" = "YiGuo Voice";
+
+/* 권한 사용 설명 */
+"NSAppleMusicUsageDescription" = "UniAI는 AI 전사 및 분석을 위해 오디오 파일을 선택하고 가져오려면 미디어 라이브러리에 접근해야 합니다.";
+"NSBluetoothAlwaysUsageDescription" = "UniAI는 스마트 녹음 장치(블루투스 이어폰, 녹음기 등)에 연결하고 실시간으로 오디오 데이터를 AI 처리하기 위해 블루투스 권한이 필요합니다.";
+"NSBluetoothPeripheralUsageDescription" = "UniAI는 스마트 녹음 장치(블루투스 이어폰, 녹음기 등)에 연결하고 실시간으로 오디오 데이터를 AI 처리하기 위해 블루투스 권한이 필요합니다.";
+"NSDocumentsFolderUsageDescription" = "UniAI는 녹음 파일을 저장하고 전사 결과를 내보내기 위해 문서 폴더에 접근해야 합니다.";
+"NSMicrophoneUsageDescription" = "UniAI는 녹음을 위해 마이크에 접근해야 합니다.";

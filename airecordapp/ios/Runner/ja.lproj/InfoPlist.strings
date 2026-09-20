@@ -1,0 +1,12 @@
+/* 日本語 - Info.plist ローカライズ */
+
+/* アプリ名 */
+"CFBundleDisplayName" = "YiGuo Voice";
+"CFBundleName" = "YiGuo Voice";
+
+/* 権限使用説明 */
+"NSAppleMusicUsageDescription" = "UniAIは、AI文字起こしと分析のために音声ファイルを選択・インポートするため、メディアライブラリへのアクセスが必要です。";
+"NSBluetoothAlwaysUsageDescription" = "UniAIは、スマート録音デバイス（Bluetoothイヤホン、ボイスレコーダーなど）に接続し、音声データをリアルタイムでAI処理するためにBluetooth権限が必要です。";
+"NSBluetoothPeripheralUsageDescription" = "UniAIは、スマート録音デバイス（Bluetoothイヤホン、ボイスレコーダーなど）に接続し、音声データをリアルタイムでAI処理するためにBluetooth権限が必要です。";
+"NSDocumentsFolderUsageDescription" = "UniAIは、録音ファイルの保存と文字起こし結果のエクスポートのために、書類フォルダへのアクセスが必要です。";
+"NSMicrophoneUsageDescription" = "UniAIは録音のためにマイクへのアクセスが必要です。";

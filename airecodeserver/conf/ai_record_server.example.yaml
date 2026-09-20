@@ -1,0 +1,85 @@
+global:
+  worker_id: 1
+
+auth:
+  sms_code:
+    expire: 600                                           # 验证码过期时间(单位：秒) -默认10分钟
+    endpoint: sms.tencentcloudapi.com                     # 接入域名
+    secret_id: YOUR_TENCENT_SECRET_ID                     # 腾讯云账户密钥对 SecretId
+    secret_key: YOUR_TENCENT_SECRET_KEY                   # 腾讯云账户密钥对 SecretKey
+    app_id: YOUR_SMS_APP_ID                               # 短信应用ID
+    sign_name: YOUR_SMS_SIGN_NAME                         # 短信签名
+    template_id: YOUR_SMS_TEMPLATE_ID                     # 短信模版ID
+    enable: true                                          # 配置是否启用短信验证码登录功能
+    is_test: false                                        # 是否用于测试，测试时不调用api发送短信
+  token:
+    expire: 2592000                                       # token过期时间(单位: 秒) -默认30天=2592000s
+    temp_expire: 600                                      # 临时token过期时间(单位: 秒) -默认3分钟
+  third_oauth:
+    wechat:
+      app_id: YOUR_WECHAT_APP_ID                          # 应用appid
+      app_secret: YOUR_WECHAT_APP_SECRET                  # 应用接口使用秘钥
+  email:
+    enable: true                                          # 配置是否启用email登录功能（境内用户默认不启用，境外用户启用）
+    expire: 900                                           # 验证码过期时间(单位：秒) -默认15分钟
+    smtp_host: smtp.example.com
+    smtp_port: 465
+    username: no_reply@example.com
+    password: YOUR_SMTP_PASSWORD
+
+media:
+  support_format:
+    - wav
+    - mp3
+    - m4a
+    - opus
+  storage:
+    path: /data/media/file
+    cos:
+      host: cos.ap-guangzhou.myqcloud.com                 # 域名
+      app_id: YOUR_TENCENT_APP_ID                         # 腾讯云APPID
+      secret_id: YOUR_TENCENT_SECRET_ID                   # 腾讯云账户密钥对 SecretId
+      secret_key: YOUR_TENCENT_SECRET_KEY                 # 腾讯云账户密钥对 SecretKey
+      region: ap-guangzhou                                # 地域
+      bucket: your-cos-bucket                             # cos存储桶
+      path: airecord/media                                # 音频文件上传的根目录
+      expire: 7200                                        # 临时授权的过期时间（单位：秒） -默认2小时
+  asr:
+    app_id: YOUR_TENCENT_APP_ID                           # 腾讯云APPID
+    secret_id: YOUR_TENCENT_SECRET_ID                     # 腾讯云账户密钥对 SecretId
+    secret_key: YOUR_TENCENT_SECRET_KEY                   # 腾讯云账户密钥对 SecretKey
+
+gpt:                                                      # 大模型
+  text_limit: 128                                         # 最小字符数限制（过低不进行总结）
+  default: hunyuan                                        # 默认GPT引擎
+  hunyuan:                                                # 腾讯-混元
+    app_id: YOUR_TENCENT_APP_ID                           # 腾讯云APPID
+    secret_id: YOUR_TENCENT_SECRET_ID                     # 腾讯云账户密钥对 SecretId
+    secret_key: YOUR_TENCENT_SECRET_KEY                   # 腾讯云账户密钥对 SecretKey
+    model: hunyuan-standard                               # 默认模型
+  openai:
+    api_type: azure                                       # 接口类型 openai/azure
+    secret_key: YOUR_AZURE_OPENAI_KEY                     # 密钥
+    model: gpt-4o                                         # 默认模型
+    base_url: https://your-resource.cognitiveservices.azure.com  # Azure接口地址
+    api_version: 2024-08-01-preview                       # Azure接口版本
+
+payment:
+  enable: true                                            # 配置是否启用支付功能
+  paypal:
+    client_id: YOUR_PAYPAL_CLIENT_ID
+    secret: YOUR_PAYPAL_SECRET
+    is_sandbox: true
+    return_url: https://your-domain.com/v1/order/paypal/return
+    cancel_url: https://your-domain.com/v1/order/paypal/cancel
+    subscription_return_url: https://your-domain.com/v1/order/paypal/subscription/return
+    subscription_cancel_url: https://your-domain.com/v1/order/paypal/subscription/cancel
+    web_base_url: https://your-domain.com/shop
+
+crontab:
+  audio_rec_status: '0 */2 * * * *'                       # 获取语音识别结果（执行频率：2分钟/次）
+
+admin:
+  enable: true                                            # 配置是否启用admin后台功能
+  html_path: ../web/dist
+  assets_path: ../web/dist/assets

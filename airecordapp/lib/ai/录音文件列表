@@ -1,0 +1,49 @@
+记录：
+https://blog.csdn.net/xzzteach/article/details/140911608
+https://cloud.tencent.com.cn/developer/article/2368748
+https://blog.csdn.net/qq_35670215/article/details/115357618
+
+怎么去打包：
+https://www.tpxhm.com/fdetail/347.html
+
+原生交互方式
+https://blog.csdn.net/weixin_41897680/article/details/136005684
+https://blog.csdn.net/Lan_Se_Tian_Ma/article/details/135716380
+
+蓝牙文档描述：
+实现如下描述算法，并使用算法发送数据：
+一、数据格式
+1Byte	1Byte	2Byte	2Byte	nByte
+魔数	    包序号	CRC校验	数据长度	数据
+
+魔数：每包数据的起始字节内容，固定为0x5A。
+包序号：用以区分不同的消息，从0开始递增，超过255重新归0。从机接收到数据包
+后需要进行回复确认，回复的包序号和接受到的包序号相同。
+CRC校验：判断包数据完整性，计算规则：数据长度+数据参与计算。
+数据长度：真实数据的长度。
+数据： 真实数据。
+
+二、数据包内容 n Byte
+数据类型	数据内容
+1Byte	n-1 Byte
+
+三、数据类型
+类型	    值
+控制命令	0
+音频数据	1
+文件传输	2
+ACK	    3
+
+四、数据内容
+	根据数据类型，音频数据和文件传输时直接为对应数据；
+	控制命令，根据不同命令定义不同结构后面详细定义；
+	ACK类型，目前可只要类型即可。
+
+五、CRC校验说明：
+	crc校验算法采用的是CRC-16/XMODEM
+
+六、控制指令细则
+功能	    数据类型(1Btye)	参数1 (cmd) 1Byte 参数2        备注
+控制命令	0               0                 年月日时分秒  同步北京时间  0
+                                          7Byte
+                                          2:1:1:1:1:1
