@@ -195,7 +195,16 @@ npm run build                   # 产物在 dist/
 - ⭐ **Star** 本仓库，让更多人看到它；
 - 🐛 提交 **Issue** 反馈问题或提出建议；
 - 🔀 提交 **Pull Request** 参与开发（见 [贡献指南](./CONTRIBUTING.md)）；
-- 🏢 **商业合作**：硬件厂商、AI 能力方、渠道方，欢迎通过 Issue 或仓库主页联系方式与我们联系。
+- 🏢 **商业合作**：我们尤其欢迎**录音笔 / 智能硬件厂商**与我们合作——你专注硬件，我们提供配套的 App + 云服务 + AI 能力，快速落地成品。AI 能力方、渠道方同样欢迎。
+
+### 📮 联系我们
+
+| 方式 | 内容 |
+| --- | --- |
+| 📧 邮箱 | **13927448856@163.com** |
+| 💬 GitHub | 在本仓库提交 [Issue](https://github.com/xufp/airecord/issues) |
+
+> 硬件厂商、投资合作、定制开发等商务洽谈，欢迎直接邮件联系，我们会尽快回复。
 
 ---
 
@@ -219,6 +228,8 @@ npm run build                   # 产物在 dist/
 - 🛒 **Shop Web** (`airecodeshop/`, Vue 3 + Vite) — login, packages, orders, PayPal checkout.
 
 **Why open source?** The project has been battle-tested in real business scenarios. We're opening it up to collaborate with developers, hardware vendors and AI teams.
+
+> 🤝 **Hardware vendors welcome!** If you build voice recorders or smart-audio devices, partner with us — you focus on hardware, we provide the matching App + cloud + AI stack. **Contact: 13927448856@163.com** or open an [Issue](https://github.com/xufp/airecord/issues).
 
 > ⚠️ **No real secrets are included.** Copy every `*.example` config file and fill in your own credentials before running. See [Getting Started](#-快速开始) above and [SECURITY.md](./SECURITY.md).
 
